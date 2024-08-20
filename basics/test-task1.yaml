@@ -1,0 +1,6 @@
+---
+- name: A Test Playbook
+  hosts: all
+  tasks:
+    - name: First Test
+      command: "touch /home/user1/testing.txt"

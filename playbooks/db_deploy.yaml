@@ -1,0 +1,28 @@
+- name: Update db servers
+  hosts: databases
+  remote_user: user1
+  become: yes
+  vars:
+    trigger_task: true
+    supported_os:
+      - RedHat
+      - Fedora
+  vars_files:
+    - my_variables.yaml
+    - db_params.yaml
+  gather_facts: false
+
+  tasks:
+
+  - name: Include Variables
+    include_vars: "my_variables2.yaml"
+
+  - name: Ensure postgresql is at the latest version
+    ansible.builtin.apt:
+      name: postgresql
+      state: latest
+
+  - name: Ensure that postgresql is started
+    ansible.builtin.service:
+      name: postgresql
+      state: started

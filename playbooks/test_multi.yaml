@@ -1,0 +1,19 @@
+---
+- hosts: webservers
+  remote_user: user1
+  become: yes
+
+  tasks:
+  - name: ensure nginx is at the latest version
+    apt:
+      name: nginx
+      state: latest
+
+- hosts: databases
+  remote_user: admin
+
+  tasks:
+  - name: ensure postgresql is at the latest version
+    apt:
+      name: postgresql
+      state: latest

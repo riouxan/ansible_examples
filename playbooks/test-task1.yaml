@@ -1,0 +1,6 @@
+---
+- name: A Test Playbook
+  hosts: all
+  tasks:
+    - name: First Test
+      command: "uname -a"

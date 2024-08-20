@@ -1,0 +1,21 @@
+---
+- name: A Test Playbook
+  hosts: webservers
+  become: yes
+
+
+  pre_tasks:
+    - name: Test task
+      command: "uptime"
+
+  tasks:
+    - name: Test task
+      command: "uname -a"
+    - name: Test task
+      command: "last"
+
+  post_tasks:
+    - name: Test task
+      command: "ps -ef"
+    - name: Test task
+      command: "who"

@@ -1,0 +1,40 @@
+ungrouped:
+  hosts:
+    host1:
+
+group1:
+  hosts:
+    host2:
+    host3:
+
+group2:
+  hosts:
+    host4:
+    host5:
+
+webservers:
+  hosts:
+    host2:
+    host3:
+    mail.example.com:
+  vars:
+    port: 8080
+    x: 50
+
+db:
+  children:
+    postgresql:
+      hosts:
+        one.example.com:
+        two.example.com:
+
+    mysql:
+      hosts:
+        host1: 
+          http_port: 80 
+          maxRequestsPerChild: 808
+        localhost:
+          ansible_connection: local
+  vars:
+    datadir: "/data"
+    port: 1234

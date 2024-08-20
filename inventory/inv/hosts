@@ -1,0 +1,39 @@
+host1
+
+[group1]
+host2
+host3
+
+[group2]
+host4
+host5
+
+[webservers]
+host1
+host2
+host3
+www[01:50].example.com
+mail.example.com
+
+[webservers:vars]
+port=8080
+x=50
+
+[db:children]
+postgresql
+mysql
+
+[db:vars]
+datadir="/data"
+port=1234
+
+[postgresql]
+one.example.com
+two.example.com
+
+[mysql]
+host1 http_port=80 maxRequestsPerChild=808
+test45.example.com:5309   # custom ssh ports (openssh, not paramiko)
+localhost              ansible_connection=local
+
+
