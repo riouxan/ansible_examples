@@ -11,6 +11,7 @@
 
 - hosts: databases
   remote_user: admin
+  become: yes
 
   tasks:
   - name: ensure postgresql is at the latest version
