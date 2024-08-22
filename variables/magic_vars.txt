@@ -1,0 +1,12 @@
+hostvars          	  vars on other host
+groups	                  all hosts and groups in inventory
+group_names	          group names for current host
+inventory_hostname	  hostname as shown in inventory
+inventory_hostname_short  hostname as shown in inventory ( just the host part )
+ansible_play_hosts 	  hosts in the play
+ansible_play_batch	  hosts in current batch of play
+ansible_playbook_python   Python path used to run ansible commandline
+inventory_dir             host file dir
+inventory_file	          host file
+playbook_dir      	  playbook base dir
+role_path	          current role path name

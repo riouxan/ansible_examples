@@ -1,0 +1,11 @@
+---
+somevar: somevalue
+password: magic
+a: 1
+b: 2
+c: 3
+list1:
+  - apple
+  - banana
+  - toast
+var1: "test"

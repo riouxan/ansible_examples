@@ -1,0 +1,25 @@
+---
+- name: Example 1
+  hosts: host1
+  become: yes
+  vars_files:
+    - external_vars.yml
+
+  tasks:
+
+    - ansible.builtin.debug:
+        var: somevar
+    - ansible.builtin.debug:
+        var: password
+    - ansible.builtin.debug:
+        var: a
+    - ansible.builtin.debug:
+        var: b
+    - ansible.builtin.debug:
+        var: c
+    - ansible.builtin.debug:
+        var: list1
+    - ansible.builtin.debug:
+        var: list1[2]
+    - ansible.builtin.debug:
+        var: var1

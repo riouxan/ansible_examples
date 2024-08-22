@@ -1,0 +1,57 @@
+---
+- name: Example 2
+  hosts: webservers
+  become: yes
+
+  tasks:
+
+    - name: Get Uptime and Register
+      ansible.builtin.shell: /usr/bin/uptime
+      register: result
+
+    - name: Print Var - test1
+      ansible.builtin.debug:
+        var: result
+    
+    - name: Print Var - test2
+      ansible.builtin.debug:
+        var: result.stdout
+
+    - name: Print Var - test3
+      ansible.builtin.debug:
+        msg: "This is it: {{ result.stdout }}"
+
+
+
+    - shell: ls -l /invalid_file_adf
+      register: result
+      ignore_errors: True
+    - name: Condionally run task 1
+      shell: echo test
+      when: result.rc == 0
+
+    - shell: ls -l /etc
+      register: result
+      ignore_errors: True
+    - name: Condionally run task 2
+      shell: echo test
+      when: result.rc == 0
+    
+
+    - name: check /etc/issue
+      shell: cat /etc/issue
+      register: motd_contents
+    - name: issue results
+      ansible.builtin.debug: 
+        msg: "Found it"
+      when: motd_contents.stdout.find('Ubuntu') != -1
+
+
+    - name: Retrieve the list of home directories
+      command: ls /home
+      register: home_dirs
+
+    - name: Output Home Dirs
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+      loop: "{{ home_dirs.stdout_lines }}"

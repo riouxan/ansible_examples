@@ -1,0 +1,24 @@
+---
+- name: Example 1
+  hosts: webservers
+  become: yes
+  vars:
+    http_port: 80
+    app1: data_tool
+    remote_install_path: '/opt/data_tool'
+    var1: !unsafe 'this variable has {{ characters that should not be treated as a jinja2 template'
+
+  tasks:
+    - name: Print Var
+      ansible.builtin.debug:
+        var: http_port
+
+    - name: Make Sure Dir Exists
+      file:
+        path: "{{ remote_install_path }}"
+        state: directory
+
+    - name: Push Config for {{ app1 }}
+      template:
+        src=settings.cfg.j2
+        dest={{ remote_install_path }}/settings.cfg

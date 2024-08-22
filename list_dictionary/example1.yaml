@@ -1,0 +1,60 @@
+---
+- name: A Test Playbook
+  hosts: host1
+  vars:
+    list1:
+      - RedHat
+      - Fedora
+      - Debian
+      - Ubuntu
+    dict1:
+      OS: Ubuntu
+      IP: 192.168.3.2
+      CPU: intel
+      Mem: 32
+    list2: [ a, b, c ]
+    dict2: { a: x, b: y, c: z }
+  tasks:
+
+    - name: Print List
+      ansible.builtin.debug:
+        var: list1
+
+    - name: Print Dictionary
+      ansible.builtin.debug:
+        var: dict1
+
+    - name: Print List Element
+      ansible.builtin.debug:
+        var: list1[2]
+
+    - name: Print Dict Element
+      ansible.builtin.debug:
+        var: dict1['OS']
+
+
+    - name: Loop Over List
+      ansible.builtin.debug:
+        msg: "Value: {{ item }}"
+      loop: "{{ list1 }}"
+
+    - name: Loop Over Dictionary
+      ansible.builtin.debug:
+        msg: "Key: {{ item.key }} Value: {{ item.value }}"
+      loop: "{{ dict1|dict2items }}"
+
+
+    - name: Print List 2
+      ansible.builtin.debug:
+        var: list2
+    - name: Print Dict 2
+      ansible.builtin.debug:
+        var: dict2
+
+    - debug:
+        var: dict2['a']
+    - debug:
+        var: dict2.a
+        var: dict2['a']
+
+

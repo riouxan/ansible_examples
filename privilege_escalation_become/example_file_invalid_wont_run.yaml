@@ -1,0 +1,73 @@
+
+
+
+–ask-pass, -k             	# ask for connection password
+–ask-become-pass, -K	        # not specifying this can cause a playbook to hang
+–become, -b             	# usually sudo to gain root priveleges
+–become-method=BECOME_METHOD	# sudo is default but can select others
+–become-user=BECOME_USER	# in case you want something other than root
+
+
+
+become   	# enable become, doesn’t imply prompting
+become_user	# user to become, default is root, doesn’t imply become
+become_method	# alternate methods you could use
+become_flags	# additional flags ….
+
+
+
+ansible-playbook book.yaml        # using SSH key and no need to sudo
+ansible-playbook -k book.yaml     # prompt for SSH password
+ansible-playbook -kKb book.yaml   # prompt for SSH password and sudo password
+ansible-playbook -b book.yaml     # works with SSH key and passwordless sudo
+
+
+# Example:
+
+---
+- hosts: webservers
+  remote_user: admin
+  become: yes
+  become_user: postgres
+  become_method: su
+
+
+
+# Remote user per task:
+
+
+
+---
+- hosts: webservers
+  remote_user: admin
+  tasks:
+    - name: test connection
+      ping:
+      remote_user: postgres
+
+
+# Become on a per task level, root by default:
+
+
+- name: Ensure the httpd service is running
+  service:
+    name: httpd
+    state: started
+  become: yes
+
+
+# Become apache user:
+
+
+- name: Run a command as the apache user
+  command: somecommand
+  become: yes
+  become_user: apache
+
+
+
+
+ansible.cfg:
+
+allow_world_readable_tmpfiles
+
