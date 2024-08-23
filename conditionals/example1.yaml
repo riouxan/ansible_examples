@@ -1,0 +1,46 @@
+---
+- name: A Test Playbook
+  hosts: all
+  become: yes
+  tasks:
+    - debug:
+        msg: "{{ ansible_facts['distribution'] }}" 
+    - debug:
+        msg: "{{ ansible_facts['distribution_major_version'] }}"
+    - debug:
+        msg: "{{ ansible_facts['os_family'] }}"
+
+    # simple conditionals:
+
+    - ansible.builtin.apt:
+        name: nginx
+      when: ansible_facts['os_family'] == "Debian"
+
+    - ansible.builtin.dnf:
+        name: nginx
+      when: ansible_facts['os_family'] == "RedHat"
+
+    # Group conditions with parentheses ( logical or ):
+
+    - name: Make sure a service is started, enabled, and not masked
+      ansible.builtin.systemd:
+        state: started
+        name: nginx
+        enabled: true
+        masked: no
+      when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "22") or
+            (ansible_facts['distribution'] == "RedHat" and ansible_facts['distribution_major_version'] == "9")
+
+    # All true ( Logical and ):
+
+    - name: Make sure a service is started, enabled, and not masked
+      ansible.builtin.systemd:
+        state: restarted
+        name: nginx
+        enabled: true
+        masked: no
+      when: 
+        - ansible_facts['distribution'] == "Ubuntu"
+        - ansible_facts['distribution_major_version'] == "22"
+
+

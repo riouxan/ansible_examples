@@ -55,6 +55,5 @@
         var: dict2['a']
     - debug:
         var: dict2.a
-        var: dict2['a']
 
 

@@ -1,0 +1,30 @@
+---
+- name: A Test Playbook
+  hosts: all
+  become: yes
+  vars:
+    epic: true
+    monumental: "yes"
+    mylist: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+    mydict: { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8 }
+    var1: "some text abc here"
+  tasks:
+
+    # Ignore errors and conditional based on results:
+    # success / succeeded / successful - these terms are aliases
+
+
+    - command: /bin/false
+      register: result
+      ignore_errors: True
+
+    - command: ls /etc
+      when: result is failed
+
+    - command: ls /var
+      register: result
+      when: result is succeeded
+
+    - command: ls /usr
+      when: result is skipped
+

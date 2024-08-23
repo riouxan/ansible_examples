@@ -1,0 +1,37 @@
+---
+- name: A Test Playbook
+  hosts: all
+  become: yes
+  vars:
+    epic: true
+    monumental: "yes"
+    mylist: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+    mydict: { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8 }
+    var1: "some text abc here"
+  tasks:
+
+    # Using when with a loop:
+
+    - debug: 
+        msg: "{{ item }}"
+      loop: [ 0, 2, 4, 6, 8, 10 ]
+      when: item > 5
+
+    # Loop over a list
+
+    - command: echo {{ item }}
+      loop: "{{ mylist|default([]) }}"
+      when: item > 5
+
+    # Loop over dict:
+
+    - command: echo {{ item.key }}
+      loop: "{{ query('dict', mydict|default({})) }}"
+      when: item.value > 5
+
+    # Check for string in var, import tasks
+
+    - import_tasks: sometasks.yml
+      when: "'abc' in var1"
+
+

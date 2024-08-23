@@ -1,0 +1,35 @@
+---
+- name: A Test Playbook
+  hosts: all
+  become: yes
+  vars:
+    epic: true
+    monumental: "yes"
+    mylist: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+    mydict: { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8 }
+    var1: "some text abc here"
+  tasks:
+
+    # Convert to int to compare:
+
+    - shell: echo "only on Red Hat 6, derivatives, and later"
+      when: ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version']|int >= 6
+
+
+    # Convert non-bools to bools, check inverse, use ‘or’:
+
+    - debug: msg="This certainly is epic!"
+      when: epic or monumental|bool
+
+    - debug: msg="This certainly isn't epic!"
+      when: not epic
+
+
+    # Check if var is defined:
+
+    - debug: msg="I've got '{{ foo }}' and am not afraid to use it!"
+      when: foo is defined
+
+    - debug: msg="Bailing out. This play requires bar"
+      when: bar is undefined
+
